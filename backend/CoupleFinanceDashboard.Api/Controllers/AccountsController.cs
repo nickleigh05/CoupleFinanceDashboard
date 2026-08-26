@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CoupleFinanceDashboard.Api.Models;
+using CoupleFinanceDashboard.Api.Data;
 
 namespace CoupleFinanceDashboard.Api.Controllers;
 
@@ -7,31 +8,26 @@ namespace CoupleFinanceDashboard.Api.Controllers;
 [Route("api/[controller]")]
 public class AccountsController : ControllerBase
 {
+
+    private readonly AppDbContext _context;
+    public AccountsController(AppDbContext context)
+    {
+        _context = context;
+    }
+
     [HttpGet]
     public IActionResult Get()
     {
-        List<Account> accounts = new List<Account>
-        {
-            new Account
-            {
-                Id = 1,
-                PartnerId = 1,
-                InstitutionName = "AMEX",
-                AccountName = "Nick",
-                Type = AccountType.Checking,
-                Balance = 236.32m
-            },
-
-            new Account
-            {
-                Id = 2,
-                PartnerId = 2,
-                InstitutionName = "CHASE",
-                AccountName = "Trinity",
-                Type = AccountType.Checking,
-                Balance = 371.76m
-            }
-        };
+        List<Account> accounts = _context.Accounts.ToList();
         return Ok(accounts);
     }
+
+    [HttpPost]
+    public IActionResult Create(Account newAccount)
+    {
+        _context.Accounts.Add(newAccount);
+        _context.SaveChanges();
+        return Ok(newAccount);
+    }
+
 }

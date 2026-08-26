@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CoupleFinanceDashboard.Api.Models;
+using CoupleFinanceDashboard.Api.Data;
 
 namespace CoupleFinanceDashboard.Api.Controllers;
 
@@ -7,24 +8,17 @@ namespace CoupleFinanceDashboard.Api.Controllers;
 [Route("api/[controller]")]
 public class PartnersController : ControllerBase
 {
+    
+    private readonly AppDbContext _context;
+    public PartnersController(AppDbContext context)
+    {
+        _context = context;
+    }
+
     [HttpGet]
     public IActionResult Get()
     {
-        List<Partner> partners = new List<Partner>
-        {
-            new Partner
-            {
-                Id = 1,
-                Name = "Nick"
-
-            },
-
-            new Partner
-            {
-                Id = 2,
-                Name = "Trinity"
-            }
-        };
+        List<Partner> partners = _context.Partners.ToList();
         return Ok(partners);
     }
 }
