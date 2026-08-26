@@ -1,14 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
+using CoupleFinanceDashboard.Api.Models;
 
 namespace CoupleFinanceDashboard.Api.Controllers;
 
-[ApiController] // marks this class as an API controller: enables automatic request validation and JSON responses
-[Route("api/[controller]")] // sets the URL prefix; [controller] is replaced with the class name minus "Controller" -> api/accounts
-public class AccountsController : ControllerBase // ":" means "inherits from" - ControllerBase gives this class helper methods like Ok(), NotFound()
+[ApiController]
+[Route("api/[controller]")]
+public class AccountsController : ControllerBase
 {
-    [HttpGet]   // marks the method below as handling GET requests to this route
-    public IActionResult Get()  // a method: return type IActionResult (an HTTP response), name Get, no parameters
+    [HttpGet]
+    public IActionResult Get()
     {
-        return Ok(new { message = "Hello, world!" });   // Ok() builds a 200 response; new { ... } is an inline anonymous object
+        List<Account> accounts = new List<Account>
+        {
+            new Account
+            {
+                Id = 1,
+                PartnerId = 1,
+                InstitutionName = "AMEX",
+                AccountName = "Nick",
+                Type = AccountType.Checking,
+                Balance = 236.32m
+            },
+
+            new Account
+            {
+                Id = 2,
+                PartnerId = 2,
+                InstitutionName = "CHASE",
+                AccountName = "Trinity",
+                Type = AccountType.Checking,
+                Balance = 371.76m
+            }
+        };
+        return Ok(accounts);
     }
 }

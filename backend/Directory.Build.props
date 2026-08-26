@@ -1,0 +1,15 @@
+<Project>
+
+  <PropertyGroup>
+    <!--
+      Some Linux distro .NET SDK packages (e.g. Arch's dotnet-sdk) ship without the
+      sdk/<version>/PrunePackageData/ folder, which makes restore fail with NETSDK1226.
+      Package pruning is only a build-time optimization that trims transitive package
+      references already provided by the shared framework, so allowing the data to be
+      missing is safe. Where the data is present (macOS/Windows SDKs) pruning still
+      happens as normal - this flag only suppresses the hard error when it is absent.
+    -->
+    <AllowMissingPrunePackageData>true</AllowMissingPrunePackageData>
+  </PropertyGroup>
+
+</Project>
