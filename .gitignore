@@ -1,0 +1,26 @@
+# Notes / scratch
+description.md
+
+# .NET
+backend/**/bin/
+backend/**/obj/
+*.user
+*.suo
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/coverage/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
