@@ -25,6 +25,11 @@ public class AccountsController : ControllerBase
     [HttpPost]
     public IActionResult Create(Account newAccount)
     {
+        if (newAccount.Type == AccountType.CreditCard)
+        {
+            newAccount.Balance = -Math.Abs(newAccount.Balance);
+        }
+        
         _context.Accounts.Add(newAccount);
         _context.SaveChanges();
         return Ok(newAccount);
